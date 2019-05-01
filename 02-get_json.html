@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Selector Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript" languge="javascript">
+        $(document).ready(function(){
+            $('#driver').click(function(){
+                //http://127.0.0.1:5500/result.1.json
+                $.getJSON('result.1.json',function(jd){
+                    $('#stage').html('<p> Name: '+ jd.name + '</p>')
+                    $('#stage').append('<p> Age: '+ jd.age + '</p>')
+                    $('#stage').append('<p> Sex: '+ jd.sex + '</p>')
+                })
+            })
+        })
+    </script>
+
+</head>
+<body>
+
+    <p>click to load result on result.html file</p>
+    <div id="stage" style="background-color:tan;">
+        stage
+    </div>
+    <button id="driver">load data</button>
+</body>
+</html>
