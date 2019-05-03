@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- <script src="jquery-1.11.2.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+ชื่อ-สกุล : <input type="text" id="txt1" name="txt1" value="" /> <br/><br/>
+
+เพศ :  ชาย <input type="radio" id="rd1" name="rd1" value="ชาย" />
+หญิง <input type="radio" id="rd1" name="rd1" value="หญิง" />  <br/><br/>
+
+<select id="st1" name="st1">
+<option value="0">---เลือก---<option>
+<option value="ป.ตรี">ป.ตรี<option>
+<option value="ป.โท">ป.โท<option>
+<option value="ป.เอก">ป.เอก<option>
+</select>  <br/><br/>
+
+<input type="button" value="OK" onclick="test()" />
+
+<div id="stage"> รายการรายชื่อ <button id="driver">แสดงรายชื่อ</button> </div>
+
+<script>
+
+function test(){
+
+var fullname = $( "#txt1").val();
+var sex = $( "input:radio[name=rd1]:checked" ).val();
+var education = $( "#st1").val();
+
+$.ajax({
+  method: "POST",
+  url: "insert.php",
+  data: { fullname: fullname , sex : sex , education : education}
+})
+  .done(function( msg ) {
+    alert( "Data Saved: " + msg );
+  });
+
+}
+
+$(document).ready(function(){
+            $('#driver').click(function(){
+                //http://127.0.0.1:5500/result.2.json
+                $.ajax({
+                    type: 'GET',
+                    url: 'read.php',
+                    dataType: "json", cache:false,
+                    success: function(jd){
+                        jd.forEach(function(ele) {
+                            $('#stage').append('<p> Name: '+ ele + '</p>')
+                            $('#stage').append('<p> Age: '+ ele + '</p>')
+                            $('#stage').append('<p> Sex: '+ ele + '</p>')
+                        })
+                    }
+                })
+            })
+        })
+
+</script>
+
+</body>
+</html>
